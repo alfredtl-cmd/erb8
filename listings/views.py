@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def listings(request):
+    print(request.path) # Debugging line to print the request path
     return render(request, 'listings/listings.html')
 
 def listing(request,listing_id):
