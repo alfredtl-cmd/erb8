@@ -1,12 +1,14 @@
 {% extends "base.html" %}
-{% comment %} index main content {% endcomment %} 
+<!-- load humanize -->
+{% load humanize %}
+<!-- index main content -->
 {% block content %}
     <!-- Showcase -->
     <section id="showcase">
       <div class="container text-center">
         <div class="home-search p-5">
           <div class="overlay p-5">
-            <h1 class="display-4 mb-4">Clinic Searching Just Got So Easy</h1>
+            <h1 class="display-4 mb-4">{{anything}}</h1>
             <p class="lead">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit.
               Recusandae quas, asperiores eveniet vel nostrum magnam voluptatum
@@ -99,167 +101,56 @@
       <div class="container">
         <h3 class="text-center mb-3">Inpatient medical services</h3>
         <div class="row">
+          {% if listings %}
           <!-- Listing 1 -->
+          {% for listing in listings %}
           <div class="col-md-6 col-lg-4 mb-4">
             <div class="card listing-preview">
-              <img
-                class="card-img-top"
-                {% comment %} listing {% endcomment %}
-                src="assets/img/clinics/clinic-1.jpg"
-                alt=""
-              />
-              <div class="card-img-overlay">
-              </div>
+              <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="" />
+              <div class="card-img-overlay"></div>
               <div class="card-body">
                 <div class="listing-heading text-center">
-                  <h4 class="text-primary">Harmony Health Clinic</h4>
+                  <h4 class="text-primary">{{ listing.title }}</h4>
                   <p>
-                    <i class="fas fa-map-marker text-secondary"></i> Kowloon Bay
+                    <i class="fas fa-map-marker text-secondary"></i> {{ listing.district }}
                   </p>
                 </div>
                 <hr />
                 <div class="row py-2 text-secondary">
                   <div class="col-6">
-                    <i class="fas fa-th-large"></i> Restrooms
+                    <i class="fas fa-th-large"></i> Service {{listing.service|apnumber|capfirst}}
                   </div>
-                  <div class="col-6">
-                    <i class="fas fa-dumbbell"></i> Treatment 
-                  </div>
+                  <div class="col-6"><i class="fas fa-dumbbell"></i> Treatment</div>
                 </div>
                 <div class="row py-2 text-secondary">
                   <div class="col-6">
-                    <i class="fas fa-bed"></i> Bedrooms
+                    <i class="fas fa-bed"></i> {{listing.rooms}}
                   </div>
                   <div class="col-6">
-                    <i class="fas fa-bath"></i> Bathrooms
-                  </div>
+                    <i class="fas fa-bath"></i> Bathrooms</div>
                 </div>
                 <hr />
                 <div class="row py-2 text-secondary">
-                  <div class="col-12"><i class="fas fa-user"></i> Ms. Ma</div>
+                  <div class="col-12"><i class="fas fa-user"></i> {{listing.doctor.name}}</div>
                 </div>
                 <div class="row text-secondary pb-2">
                   <div class="col-12">
-                    <i class="fas fa-clock"></i> Reservation required
+                    <i class="fas fa-clock"></i> Post on {{listing.list_date|timesince}} ago
                   </div>
                 </div>
                 <hr />
                 {% comment %} listing {% endcomment %}
-                <a href="listing.html" class="btn btn-primary btn-block"
+                <a href="{% url 'listings:listing' listing.id %}" class="btn btn-primary btn-block"
                   >More Info</a
                 >
               </div>
             </div>
           </div>
-
-          <!-- Listing 2 -->
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card listing-preview">
-              <img
-                class="card-img-top"
-                {% comment %} Listing {% endcomment %}
-                src="assets/img/clinics/clinic-2.jpg"
-                alt=""
-              />
-              <div class="card-img-overlay">
-              </div>
-              <div class="card-body">
-                <div class="listing-heading text-center">
-                  <h4 class="text-primary">Evercare Medical Center</h4>
-                  <p>
-                    <i class="fas fa-map-marker text-secondary"></i> Kowloon
-                    City
-                  </p>
-                </div>
-                <hr />
-                <div class="row py-2 text-secondary">
-                  <div class="col-6">
-                    <i class="fas fa-th-large"></i> Restrooms
-                  </div>
-                  <div class="col-6">
-                    <i class="fas fa-dumbbell"></i> Treatment 
-                  </div>
-                </div>
-                <div class="row py-2 text-secondary">
-                  <div class="col-6">
-                    <i class="fas fa-bed"></i> Bedrooms
-                  </div>
-                  <div class="col-6">
-                    <i class="fas fa-bath"></i> Bathrooms
-                  </div>
-                </div>
-                <hr />
-                <div class="row py-2 text-secondary">
-                  <div class="col-12">
-                    <i class="fas fa-user"></i> Ms. Chung
-                  </div>
-                </div>
-                <div class="row text-secondary pb-2">
-                  <div class="col-12">
-                    <i class="fas fa-clock"></i> Reservation required
-                  </div>
-                </div>
-                <hr />
-                {% comment %}  {% endcomment %}
-                <a href="listing.html" class="btn btn-primary btn-block"
-                  >More Info</a
-                >
-              </div>
-            </div>
+          {% endfor %} {% else %}
+          <div class="col-md-12">
+            <h2>No Clinic Available</h2>
           </div>
-
-          <!-- Listing 3 -->
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card listing-preview">
-              <img
-                class="card-img-top"
-                {% comment %} Listing 3 Image {% endcomment %}
-                src="assets/img/clinics/clinic-3.jpg"
-                alt=""
-              />
-              <div class="card-img-overlay">
-              </div>
-              <div class="card-body">
-                <div class="listing-heading text-center">
-                  <h4 class="text-primary">VitalPath Wellness Clinic</h4>
-                  <p>
-                    <i class="fas fa-map-marker text-secondary"></i> Sham Shui
-                    Po
-                  </p>
-                </div>
-                <hr />
-                <div class="row py-2 text-secondary">
-                  <div class="col-6">
-                    <i class="fas fa-th-large"></i> Restrooms
-                  </div>
-                  <div class="col-6">
-                    <i class="fas fa-dumbbell"></i> Treatment 
-                  </div>
-                </div>
-                <div class="row py-2 text-secondary">
-                  <div class="col-6">
-                    <i class="fas fa-bed"></i> Bedrooms
-                  </div>
-                  <div class="col-6">
-                    <i class="fas fa-bath"></i> Bathrooms
-                  </div>
-                </div>
-                <hr />
-                <div class="row py-2 text-secondary">
-                  <div class="col-12"><i class="fas fa-user"></i> Ms. Chan</div>
-                </div>
-                <div class="row text-secondary pb-2">
-                  <div class="col-12">
-                    <i class="fas fa-clock"></i> Reservation required
-                  </div>
-                </div>
-                {% comment %} Listing 3 Description {% endcomment %}
-                <a href="listing.html" class="btn btn-primary btn-block"
-                  >More Info</a
-                >
-              </div>
-            </div>
-          </div>
+          {% endif %}
         </div>
       </div>
     </section>
