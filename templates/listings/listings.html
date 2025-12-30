@@ -2,8 +2,8 @@
 <!-- load base -->
 {% load static %}
 <!-- load static -->
-{% block content %}
 {% load humanize %}
+{% block content %}
 <section id="showcase-inner" class="py-5 text-white">
     <div class="container">
         <div class="row text-center">
@@ -44,56 +44,32 @@
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card listing-preview">
                 {% comment %} Listing 1 - Harmony Health Clinic {% endcomment %}
-                <img
-                class="card-img-top"
-                src="assets/img/clinics/clinic-1.jpg"
-                alt=""
-                />
-                <div class="card-img-overlay">
-                </div>
-            <div class="card-body">
-                <div class="listing-heading text-center">
-                <h4 class="text-primary">Harmony Health Clinic</h4>
-                <p>
-                    <i class="fas fa-map-marker text-secondary"></i> Kowloon Bay
-                </p>
-                </div>
+                <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="" />
+                <div class="card-img-overlay"></div>
+                <div class="card-body">
+                    <div class="listing-heading text-center">
+                        <h4 class="text-primary">{{ listing.title | title }}</h4>
+                        <p>
+                            <i class="fas fa-map-marker text-secondary"></i>{{listing.district | title}}
+                        </p>
+                    </div>
                 <hr />
                 <div class="row py-2 text-secondary">
-                <div class="col-6">
-                    <i class="fas fa-th-large"></i> Restrooms
-                </div>
-                <div class="col-6">
-                    <i class="fas fa-dumbbell"></i> Treatment 
-                </div>
-                </div>
-                <div class="row py-2 text-secondary">
-                <div class="col-6">
-                    <i class="fas fa-bed"></i> Bedrooms
-                </div>
-                <div class="col-6">
-                    <i class="fas fa-bath"></i> Bathrooms
-                </div>
-                </div>
-                <hr />
-                <div class="row py-2 text-secondary">
-                <div class="col-12"><i class="fas fa-user"></i> Ms. Ma</div>
-                </div>
-                <div class="row text-secondary pb-2">
-                <div class="col-12">
-                    <i class="fas fa-clock"></i> Reservation required
-                </div>
+                    <div class="col-6">
+                        <i class="fas fa-th-large"></i>
+                        Services {{listing.service|apnumber | capfirst}}
+                    </div>
                 </div>
                 <hr />
                 {% comment %} Listing 1 - Harmony Health Clinic {% endcomment %}
-                <a href="listing.html" class="btn btn-primary btn-block"
+                <a href="{% url 'listings:listing' listing.id %}" class="btn btn-primary btn-block"
                 >More Info</a
                 >
             </div>
             </div>
             {% endfor %} {% else %}
             <div class="col-md-12">
-                <p>No listings available at the moment. Please check back later.</p>
+                <h2>No Clinic Available</h2>
             </div>
             {% endif %}
         <div class="row">
