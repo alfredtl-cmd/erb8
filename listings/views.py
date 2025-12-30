@@ -1,9 +1,13 @@
 from django.shortcuts import render
-
+from .models import Listing
 # Create your views here.
 def listings(request):
-    print(request.path) # Debugging line to print the request path
-    return render(request, 'listings/listings.html')
+    Listings = Listing.objects.filter(is_published=True)
+    paginator = Paginator(listings,3)
+    page = request.GET.get('page')
+    paged_listings = paginator.get_page(page)
+    context = {"listings": Listings}
+    return render(request, 'listings/listings.html', context)
 
 def listing(request,listing_id):
     return render(request, 'listings/listing.html')
